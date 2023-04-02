@@ -1,0 +1,8 @@
+.vs
+.git
+*.eep
+*.elf
+*.hex
+*.lss
+*.map
+*.srec
