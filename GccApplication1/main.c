@@ -14,6 +14,28 @@ char current_value;
 char* active_word;
 int points = 0;
 
+//int cursor_pos = 0;
+//int prev_pos = 0;
+
+//// pd1 functions as enter
+//ISR( INT4_vect ) {
+	//if(EICRB == 0b00001111){
+		//EICRB = 0b00001110;
+		//cursor_pos++;
+		//if(cursor_pos - prev_pos > 1){
+			//cursor_pos--;
+		//}
+		//prev_pos = cursor_pos;
+		//}else if(EICRB == 0b00001110){
+		//EICRB = 0b00001111;
+	//}
+//}
+//
+//// pd2 funtions as backspace
+//ISR( INT5_vect ) {
+	//
+//}
+
 unsigned long timer_freq = (F_CPU + (64/2)) / 64;
 
 char* words[] = {"blowen", "duivel", "slecht", "vlaams", "worden", "kasten", "matrix", "koekje", "tattoo", "kippen", "vogels", "piraat", "zilver", "metaal", "tassen", "bedden"};
@@ -85,6 +107,10 @@ int main()
 	
 	DDRE = 0xFF;
 	
+	//DDRE = 0x00;
+	//EICRB |= 0b00001111;
+	//EIMSK |= 0b00110000;
+	
 
 	// initialisations
 	initLCD();
@@ -99,6 +125,7 @@ int main()
 	
 	get_random_word();
 	
+	//sei();
 	while (1)
 	{
 		ADCSRA |= (1<<6);
@@ -106,7 +133,7 @@ int main()
 		current_value = (char)((ADCH / 10.2) + 97);
 		lcd_write_data(current_value);
 		
-		// interrupts didn't work so this is the solution.
+		// interrupts didn't work so we commented them out.
 		
 		// enter
 		if(PINA & (1<<0))
